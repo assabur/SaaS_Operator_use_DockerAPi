@@ -4,8 +4,8 @@ import getpass
 import sys
 import docker
 def log() :
-    print("\tVeuillez renseigner les deux arguments de l SaaS_Operator_use_DockerAPi comme suit")
-    print("\tdepop [lien github] [tag]")
+    print("\tVeuillez renseigner les deux arguments de comme suit")
+    print("\t format de la commande : depop [lien github] [tag]")
 
 if len (sys.argv)==2 and sys.argv[1]!= "help" :
     log()
@@ -36,7 +36,7 @@ if len (sys.argv) ==3 :
     """user = sys.argv[2]
     passw = sys.argv[3]"""
     name = sys.argv[2]
-    client = docker.from_env()
+    client = docker.from_env() #cree le client docker
     print("Start Building your docker image...")
     client.images.build(path = "./",tag = name)
     print("verification de la creation de "+name)
@@ -45,15 +45,17 @@ if len (sys.argv) ==3 :
         print (client.images.list()[x])"""
     print(client.images.get(name))
     print("deployment done !!!")
-    val = input("Voulez vous effectuer un PUSH sur Docker-HUB ? Y/N  ")
-    if val =="y" or "Y":
+    val = raw_input("Voulez vous effectuer un PUSH sur Docker-HUB ? Y/N  ")
+    if val =="y" or val =="Y":
         login = raw_input("Votre identifiant Docker Hub: ")
         mdp= getpass.getpass("votre mot de passe: ")
-        print(mdp)
+        #print(mdp)
         print("start pushing your docker image to docker hub")
         client.login(username= login, password= mdp)
         for line in client.images.push(name, stream=True, decode=True):
             print(line)
+    else :
+        print("Thanks bye")
 else :
     if len(sys.argv) >3 :
         print (" Erreur faites depop help")
