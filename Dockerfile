@@ -16,7 +16,7 @@ RUN apt-get -y install apache2
 
 RUN mkdir /var/www/html/medibed
 
-RUN git clone https://github.com/assabur/PHP-MySQL-CRUD-Web-Application /var/www/html/medibed
+RUN git clone https://github.com/shehryarkn/PHP-MySQL-CRUD-Web-Application /var/www/html/medibed
 
 ENV APACHE_RUN_USER www-data
 

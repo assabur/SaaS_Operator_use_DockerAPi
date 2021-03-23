@@ -4,7 +4,7 @@ import getpass
 import sys
 import docker
 def log() :
-    print("\tVeuillez renseigner les deux arguments de comme suit")
+    print("\tVeuillez renseigner les deux arguments comme suit")
     print("\t format de la commande : depop [lien github] [tag]")
 
 if len (sys.argv)==2 and sys.argv[1]!= "help" :
@@ -36,6 +36,7 @@ if len (sys.argv) ==3 :
     """user = sys.argv[2]
     passw = sys.argv[3]"""
     name = sys.argv[2]
+    #on va use alpi docker
     client = docker.from_env() #cree le client docker
     print("Start Building your docker image...")
     client.images.build(path = "./",tag = name)
@@ -44,6 +45,7 @@ if len (sys.argv) ==3 :
     """for x in range(len(client.images.list())):
         print (client.images.list()[x])"""
     print(client.images.get(name))
+    client.containers.run(name, detach=True)
     print("deployment done !!!")
     val = raw_input("Voulez vous effectuer un PUSH sur Docker-HUB ? Y/N  ")
     if val =="y" or val =="Y":
@@ -61,3 +63,4 @@ else :
         print (" Erreur faites depop help")
 
 #https://github.com/assabur/PHP-MySQL-CRUD-Web-Application
+#https://github.com/shehryarkn/PHP-MySQL-CRUD-Web-Application
